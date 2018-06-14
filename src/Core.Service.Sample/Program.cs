@@ -17,8 +17,6 @@ namespace Core.Service.Sample
                  .ConfigureHostConfiguration(configHost =>
                  {
                      configHost.SetBasePath(Directory.GetCurrentDirectory());
-                     configHost.AddJsonFile("appsettings.json", optional: true);
-                     configHost.AddEnvironmentVariables(prefix: "ASPNETCORE_");
                      configHost.AddCommandLine(args);
                  })
                  .ConfigureAppConfiguration((hostContext, configApp) =>
@@ -27,12 +25,11 @@ namespace Core.Service.Sample
                      configApp.AddJsonFile(
                          $"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json",
                          optional: true);
-                     configApp.AddEnvironmentVariables(prefix: "ASPNETCORE_");
-                     configApp.AddCommandLine(args);
+                      configApp.AddCommandLine(args);
                  })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddHostedService<ServiceHost>();
+                    services.AddHostedService<ApplicationLifetimeHostedService>();
                 })
                 .ConfigureLogging((hostContext, configLogging) =>
                 {

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Core.Service.Sample
 {
-    public class ServiceHost : IHostedService
+    public class ApplicationLifetimeHostedService : IHostedService
     {
         IApplicationLifetime appLifetime;
-        ILogger<ServiceHost> logger;
+        ILogger<ApplicationLifetimeHostedService> logger;
         IHostingEnvironment environment;
-        public ServiceHost(IHostingEnvironment environment,ILogger<ServiceHost> logger, IApplicationLifetime appLifetime)
+        public ApplicationLifetimeHostedService(IHostingEnvironment environment,ILogger<ApplicationLifetimeHostedService> logger, IApplicationLifetime appLifetime)
         {
             this.logger = logger;
             this.appLifetime = appLifetime;
