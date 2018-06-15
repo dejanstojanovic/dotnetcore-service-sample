@@ -1,13 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -29,15 +22,7 @@ namespace Core.Service.Sample
             this.logger = logger;
             this.appLifetime = appLifetime;
             this.environment = environment;
-
-            //Log.Logger = new LoggerConfiguration()
-            //                  .ReadFrom.Configuration(configuration)
-            //                  .CreateLogger();
-
         }
-
-
-
 
         public Task StartAsync(CancellationToken cancellationToken)
         {

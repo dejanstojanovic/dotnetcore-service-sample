@@ -1,5 +1,4 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -29,10 +28,6 @@ namespace Core.Service.Sample
                  })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddSingleton<IConfiguration>(new ConfigurationBuilder()
-                        .SetBasePath(Directory.GetCurrentDirectory())
-                        .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName.ToLower()}.json")
-                        .Build());
                     services.AddLogging();
                     services.AddHostedService<ApplicationLifetimeHostedService>();
                 })
