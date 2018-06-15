@@ -21,4 +21,13 @@
     <PackageReference Include="Serilog.Settings.Configuration" Version="2.6.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="appsettings.development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

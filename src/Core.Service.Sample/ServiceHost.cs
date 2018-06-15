@@ -1,5 +1,7 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -16,11 +18,22 @@ namespace Core.Service.Sample
         IApplicationLifetime appLifetime;
         ILogger<ApplicationLifetimeHostedService> logger;
         IHostingEnvironment environment;
-        public ApplicationLifetimeHostedService(IHostingEnvironment environment,ILogger<ApplicationLifetimeHostedService> logger, IApplicationLifetime appLifetime)
+        IConfiguration configuration;
+        public ApplicationLifetimeHostedService(
+            IConfiguration configuration,
+            IHostingEnvironment environment,
+            ILogger<ApplicationLifetimeHostedService> logger, 
+            IApplicationLifetime appLifetime)
         {
+            this.configuration = configuration;
             this.logger = logger;
             this.appLifetime = appLifetime;
             this.environment = environment;
+
+            Log.Logger = new LoggerConfiguration()
+                              .ReadFrom.Configuration(configuration)
+                              .CreateLogger();
+
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
