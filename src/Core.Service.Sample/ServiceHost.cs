@@ -30,25 +30,18 @@ namespace Core.Service.Sample
             this.appLifetime = appLifetime;
             this.environment = environment;
 
-            Log.Logger = new LoggerConfiguration()
-                              .ReadFrom.Configuration(configuration)
-                              .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //                  .ReadFrom.Configuration(configuration)
+            //                  .CreateLogger();
 
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        MethodBase GetCurrentMethod()
-        {
-            StackTrace st = new StackTrace();
-            StackFrame sf = st.GetFrame(1);
 
-            return sf.GetMethod();
-        }
 
 
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+            this.logger.LogInformation("StartAsync method called.");
 
             this.appLifetime.ApplicationStarted.Register(OnStarted);
             this.appLifetime.ApplicationStopping.Register(OnStopping);
@@ -60,21 +53,21 @@ namespace Core.Service.Sample
 
         private void OnStarted()
         {
-            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+            this.logger.LogInformation("OnStarted method called.");
 
             // Post-startup code goes here
         }
 
         private void OnStopping()
         {
-            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+            this.logger.LogInformation("OnStopping method called.");
 
             // On-stopping code goes here
         }
 
         private void OnStopped()
         {
-            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+            this.logger.LogInformation("OnStopped method called.");
 
             // Post-stopped code goes here
         }
@@ -82,7 +75,7 @@ namespace Core.Service.Sample
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+            this.logger.LogInformation("StopAsync method called.");
 
             return Task.CompletedTask;
         }

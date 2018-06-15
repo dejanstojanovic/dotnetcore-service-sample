@@ -22,7 +22,9 @@ namespace Core.Service.Sample
                  })
                  .ConfigureAppConfiguration((hostContext, configApp) =>
                  {
+                     configApp.SetBasePath(Directory.GetCurrentDirectory());
                      configApp.AddEnvironmentVariables(prefix: "ASPNETCORE_");
+                     configApp.AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json");
                      configApp.AddCommandLine(args);
                  })
                 .ConfigureServices((hostContext, services) =>
@@ -36,6 +38,9 @@ namespace Core.Service.Sample
                 })
                 .ConfigureLogging((hostContext, configLogging) =>
                 {
+                    configLogging.AddSerilog(new LoggerConfiguration()
+                              .ReadFrom.Configuration(hostContext.Configuration)
+                              .CreateLogger());
                     configLogging.AddConsole();
                     configLogging.AddDebug();
                 })
