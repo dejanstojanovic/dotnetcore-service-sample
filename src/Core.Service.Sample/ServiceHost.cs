@@ -2,6 +2,9 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,8 +23,20 @@ namespace Core.Service.Sample
             this.environment = environment;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        MethodBase GetCurrentMethod()
+        {
+            StackTrace st = new StackTrace();
+            StackFrame sf = st.GetFrame(1);
+
+            return sf.GetMethod();
+        }
+
+
         public Task StartAsync(CancellationToken cancellationToken)
         {
+            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+
             this.appLifetime.ApplicationStarted.Register(OnStarted);
             this.appLifetime.ApplicationStopping.Register(OnStopping);
             this.appLifetime.ApplicationStopped.Register(OnStopped);
@@ -32,28 +47,30 @@ namespace Core.Service.Sample
 
         private void OnStarted()
         {
-            this.logger.LogInformation("OnStarted has been called.");
+            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
 
-            // Perform post-startup activities here
+            // Post-startup code goes here
         }
 
         private void OnStopping()
         {
-            this.logger.LogInformation("OnStopping has been called.");
+            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
 
-            // Perform on-stopping activities here
+            // On-stopping code goes here
         }
 
         private void OnStopped()
         {
-            this.logger.LogInformation("OnStopped has been called.");
+            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
 
-            // Perform post-stopped activities here
+            // Post-stopped code goes here
         }
 
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
+            this.logger.LogInformation($"{GetCurrentMethod().Name} method called.");
+
             return Task.CompletedTask;
         }
     }
